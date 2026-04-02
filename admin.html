@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Dynance Product Manager</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ── ADMIN-SPECIFIC STYLES ─────────────────────────────── */
+
+    /* Lock screen */
+    #lock-screen {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, #1E3A5F, #0D1B2A);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding: 1.5rem;
+    }
+    #lock-screen h2 {
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-size: 1.6rem;
+      text-align: center;
+    }
+    #lock-screen p { color: var(--cream); opacity: 0.7; font-size: 0.85rem; text-align: center; }
+    #lock-password {
+      padding: 0.8rem 1.2rem;
+      border-radius: 50px;
+      border: 2px solid var(--gold-dark);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      width: 100%; max-width: 320px;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+    #lock-password:focus { outline: 2px solid var(--gold); }
+    #lock-error { color: #EF5350; font-size: 0.82rem; min-height: 1rem; }
+
+    /* Admin layout */
+    .admin-wrapper {
+      padding-top: 80px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0a1520 0%, var(--navy) 100%);
+    }
+
+    .admin-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .admin-header h1 {
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-size: 1.5rem;
+    }
+
+    /* Setup instructions banner */
+    .setup-banner {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.6rem;
+      margin-bottom: 2rem;
+      font-size: 0.82rem;
+      color: var(--cream);
+      line-height: 1.7;
+    }
+    .setup-banner strong { color: var(--gold); }
+    .setup-banner summary { cursor: pointer; color: var(--gold-light); font-weight: 700; margin-bottom: 0.5rem; }
+
+    /* Two-column admin grid */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Form panel */
+    .admin-form-panel {
+      background: rgba(30,58,95,0.45);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      position: sticky;
+      top: 100px;
+    }
+
+    .admin-form-panel h2 {
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    /* Image preview */
+    .img-preview-wrap {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: rgba(255,255,255,0.04);
+      border: 2px dashed rgba(201,168,76,0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: border-color var(--trans);
+      overflow: hidden;
+      position: relative;
+    }
+    .img-preview-wrap:hover { border-color: var(--gold); }
+    .img-preview-wrap img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .img-preview-placeholder { text-align: center; color: var(--text-light); font-size: 0.82rem; pointer-events: none; }
+    .img-preview-placeholder span { font-size: 2.5rem; display: block; margin-bottom: 0.3rem; }
+
+    #img-file-input { display: none; }
+
+    .upload-progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+      display: none;
+    }
+    .upload-progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, var(--gold-dark), var(--gold));
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    /* Stock toggle */
+    .stock-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+    }
+    .stock-toggle-label { font-size: 0.82rem; color: var(--cream); }
+
+    .toggle {
+      position: relative;
+      width: 46px; height: 24px;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--gold); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+    /* Product list panel */
+    .admin-list-panel h2 {
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .admin-product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Each product row in the admin list */
+    .admin-product-row {
+      background: rgba(30,58,95,0.4);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color var(--trans);
+      animation: fadeUp 0.4s ease both;
+    }
+    .admin-product-row:hover { border-color: rgba(201,168,76,0.4); }
+
+    .admin-product-row.out-of-stock { opacity: 0.5; }
+
+    .admin-row-img {
+      width: 56px; height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--navy-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .admin-row-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+    .admin-row-info { flex: 1; min-width: 0; }
+    .admin-row-name { font-weight: 700; color: var(--gold-light); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-row-price { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+
+    .admin-row-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 50px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .badge-in  { background: rgba(46,125,50,0.25); color: #81C784; border: 1px solid rgba(46,125,50,0.4); }
+    .badge-out { background: rgba(198,40,40,0.2);  color: #EF9A9A; border: 1px solid rgba(198,40,40,0.3); }
+
+    .admin-row-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+    .icon-btn {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid rgba(201,168,76,0.25);
+      background: transparent;
+      color: var(--cream);
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--trans);
+    }
+    .icon-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .icon-btn.danger:hover { background: rgba(198,40,40,0.2); border-color: #EF5350; color: #EF5350; }
+
+    /* Empty state */
+    .admin-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-light);
+      font-size: 0.88rem;
+      border: 1px dashed rgba(201,168,76,0.2);
+      border-radius: var(--radius);
+    }
+    .admin-empty span { font-size: 2.5rem; display: block; margin-bottom: 0.8rem; }
+
+    /* Loading skeleton for product list */
+    .admin-skeleton-row {
+      background: rgba(30,58,95,0.3);
+      border-radius: var(--radius);
+      height: 74px;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      background: var(--navy-mid);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.4rem;
+      font-size: 0.85rem;
+      color: var(--cream);
+      z-index: 5000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 320px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.ok  { border-color: #4CAF50; }
+    .toast.err { border-color: #EF5350; }
+
+    /* Confirm delete modal */
+    .confirm-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 3000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .confirm-overlay.open { opacity: 1; pointer-events: all; }
+    .confirm-box {
+      background: var(--navy-mid);
+      border: 1px solid rgba(198,40,40,0.5);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 380px; width: 100%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.25s;
+    }
+    .confirm-overlay.open .confirm-box { transform: scale(1); }
+    .confirm-box h3 { color: #EF5350; font-family: var(--font-display); margin-bottom: 0.8rem; }
+    .confirm-box p { color: var(--cream); opacity: 0.8; font-size: 0.88rem; margin-bottom: 1.5rem; }
+    .confirm-box-actions { display: flex; gap: 0.8rem; justify-content: center; }
+
+    @media (max-width: 800px) {
+      .admin-grid { grid-template-columns: 1fr; }
+      .admin-form-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LOCK SCREEN — shown until correct password is entered
+       Change the password inside the JS section below (ADMIN_CONFIG).
+  ══════════════════════════════════════════════════════════════ -->
+  <div id="lock-screen">
+    <div style="font-size:3rem">🔒</div>
+    <h2>Admin Access</h2>
+    <p>Enter your password to manage Dynance products</p>
+    <input
+      type="password"
+      id="lock-password"
+      placeholder="Enter password"
+      autocomplete="current-password"
+    />
+    <button class="btn btn--gold" onclick="checkPassword()">Unlock</button>
+    <div id="lock-error"></div>
+    <p style="font-size:0.72rem; margin-top:1rem; opacity:0.4;">
+      This page is not linked from the main site — keep the URL private.
+    </p>
+  </div>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <span class="navbar__brand">Dynance <span style="color:var(--text-light);font-size:0.7rem;font-family:var(--font-body);">ADMIN</span></span>
+    <ul class="navbar__links">
+      <li><a href="index.html">← Back to Site</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── MAIN ADMIN WRAPPER ─────────────────────────────────── -->
+  <div class="admin-wrapper">
+    <div class="admin-container">
+
+      <div class="admin-header">
+        <h1>📦 Product Manager</h1>
+        <button class="btn btn--outline" onclick="startAdd()" id="add-new-btn">+ Add New Product</button>
+      </div>
+
+      <!-- Setup instructions (collapsed by default) -->
+      <div class="setup-banner">
+        <details>
+          <summary>⚙️ First-time setup instructions (click to expand)</summary>
+          <br/>
+          This admin panel saves products to a <strong>Google Sheet</strong> via <strong>Google Apps Script</strong> (both free).
+          You only do this setup once:<br/><br/>
+          <strong>Step 1:</strong> Create a new Google Sheet. Add these column headers in row 1:<br/>
+          &nbsp;&nbsp;<code>id | name | description | price | imgURL | emoji | inStock</code><br/><br/>
+          <strong>Step 2:</strong> In Google Sheets, click <strong>Extensions → Apps Script</strong>.<br/>
+          Delete any existing code. Paste the Apps Script code from <code>apps-script.gs</code> (provided separately).<br/>
+          Click <strong>Deploy → New deployment → Web App → Anyone → Deploy</strong>. Copy the Web App URL.<br/><br/>
+          <strong>Step 3:</strong> Paste the Web App URL into <code>ADMIN_CONFIG.appsScriptURL</code> below in this file's &lt;script&gt; tag.<br/><br/>
+          <strong>Step 4:</strong> Get a free Imgur Client ID at <a href="https://api.imgur.com/oauth2/addclient" target="_blank" style="color:var(--gold-light)">api.imgur.com</a> (select "Anonymous usage"). Paste into <code>ADMIN_CONFIG.imgurClientId</code>.<br/><br/>
+          <strong>Step 5:</strong> Change the password in <code>ADMIN_CONFIG.password</code>. Done! 🎉
+        </details>
+      </div>
+
+      <div class="admin-grid">
+
+        <!-- ── LEFT: ADD / EDIT FORM ──────────────────────── -->
+        <div class="admin-form-panel">
+          <h2 id="form-heading">➕ Add New Product</h2>
+
+          <!-- Image upload area -->
+          <div class="img-preview-wrap" id="img-drop-zone" onclick="document.getElementById('img-file-input').click()">
+            <div class="img-preview-placeholder" id="img-placeholder">
+              <span>📷</span>
+              Click to upload product photo
+            </div>
+            <img id="img-preview" src="" alt="" style="display:none;" />
+          </div>
+          <input type="file" id="img-file-input" accept="image/*" onchange="handleImageSelect(this)" />
+
+          <!-- Upload progress bar -->
+          <div class="upload-progress" id="upload-progress">
+            <div class="upload-progress-bar" id="upload-progress-bar"></div>
+          </div>
+
+          <!-- Hidden field stores the final image URL after Imgur upload -->
+          <input type="hidden" id="field-imgURL" />
+          <input type="hidden" id="field-id" />
+
+          <!-- Product name -->
+          <div class="form-group">
+            <label for="field-name">Product Name *</label>
+            <input type="text" id="field-name" placeholder="e.g. Stem Cell Serum" />
+          </div>
+
+          <!-- Price -->
+          <div class="form-group">
+            <label for="field-price">Price *</label>
+            <input type="text" id="field-price" placeholder="e.g. $45" />
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="field-desc">Description *</label>
+            <textarea id="field-desc" style="min-height:90px;" placeholder="Short description of the product (2-4 sentences)…"></textarea>
+          </div>
+
+          <!-- Emoji fallback -->
+          <div class="form-group">
+            <label for="field-emoji">Emoji (shown if no photo) *</label>
+            <input type="text" id="field-emoji" placeholder="e.g. 💧" maxlength="4" />
+          </div>
+
+          <!-- In-stock toggle -->
+          <div class="stock-toggle-row">
+            <span class="stock-toggle-label">Product is in stock</span>
+            <label class="toggle">
+              <input type="checkbox" id="field-inStock" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Action buttons -->
+          <div style="display:flex; gap:0.8rem; flex-direction:column;">
+            <button class="btn btn--gold" id="save-btn" onclick="saveProduct()">Save Product</button>
+            <button class="btn btn--outline" id="cancel-btn" onclick="cancelEdit()" style="display:none;">Cancel Edit</button>
+          </div>
+
+          <div id="save-status" style="font-size:0.82rem; margin-top:0.8rem; min-height:1rem;"></div>
+        </div>
+
+        <!-- ── RIGHT: PRODUCT LIST ─────────────────────────── -->
+        <div class="admin-list-panel">
+          <h2>
+            🗂️ Current Products
+            <span id="product-count" style="font-size:0.75rem; color:var(--text-light); font-family:var(--font-body); font-weight:400;"></span>
+          </h2>
+
+          <!-- Product rows injected here by JS -->
+          <div id="admin-product-list" class="admin-product-list">
+            <!-- Skeleton loaders -->
+            <div class="admin-skeleton-row skeleton"></div>
+            <div class="admin-skeleton-row skeleton" style="animation-delay:0.1s"></div>
+            <div class="admin-skeleton-row skeleton" style="animation-delay:0.2s"></div>
+          </div>
+        </div>
+
+      </div><!-- /admin-grid -->
+    </div><!-- /admin-container -->
+  </div><!-- /admin-wrapper -->
+
+  <!-- ── DELETE CONFIRM MODAL ────────────────────────────────── -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box">
+      <h3>Delete Product?</h3>
+      <p id="confirm-msg">This will permanently remove this product from your store.</p>
+      <div class="confirm-box-actions">
+        <button class="btn btn--outline" onclick="closeConfirm()">Cancel</button>
+        <button class="btn btn--gold" style="background:#C62828;border:none;" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOAST ───────────────────────────────────────────────── -->
+  <div class="toast" id="toast"></div>
+
+  <footer><p>© 2026 <span>Dynance Stem Cell</span> — Admin Panel</p></footer>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ADMIN JAVASCRIPT
+  ══════════════════════════════════════════════════════════════ -->
+  <script>
+    /* ══════════════════════════════════════════════════════════
+       ⚙️  ADMIN CONFIG — Edit these values once during setup
+    ══════════════════════════════════════════════════════════════ */
+    const ADMIN_CONFIG = {
+      // The password to unlock this admin panel
+      // CHANGE THIS to something only you know!
+      password: "dynance2026",
+
+      // Paste your Google Apps Script Web App URL here after deploying
+      appsScriptURL: "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE",
+
+      // Paste your Imgur Client ID here (get free at api.imgur.com)
+      imgurClientId: "YOUR_IMGUR_CLIENT_ID_HERE",
+    };
+    /* ══════════════════════════════════════════════════════════
+       END OF CONFIG — Do not edit below unless you know JS
+    ══════════════════════════════════════════════════════════════ */
+
+    /* ── STATE ─────────────────────────────────────────────── */
+    let allProducts   = [];   // full product list from Sheets
+    let editingId     = null; // id of product being edited (null = new)
+    let pendingDelete = null; // id of product waiting for delete confirm
+
+    /* ── PASSWORD CHECK ────────────────────────────────────── */
+    function checkPassword() {
+      const val = document.getElementById('lock-password').value;
+      if (val === ADMIN_CONFIG.password) {
+        document.getElementById('lock-screen').style.display = 'none';
+        loadProducts(); // load products once unlocked
+      } else {
+        const err = document.getElementById('lock-error');
+        err.textContent = '❌ Incorrect password. Try again.';
+        document.getElementById('lock-password').value = '';
+        setTimeout(() => err.textContent = '', 3000);
+      }
+    }
+
+    // Allow pressing Enter on the password field
+    document.getElementById('lock-password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    /* ── TOAST HELPER ──────────────────────────────────────── */
+    function showToast(msg, type = 'ok') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className   = `toast ${type} show`;
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    /* ── LOAD PRODUCTS FROM GOOGLE SHEETS VIA APPS SCRIPT ─── */
+    async function loadProducts() {
+      try {
+        const res  = await fetch(`${ADMIN_CONFIG.appsScriptURL}?action=get`);
+        const data = await res.json();
+        allProducts = data.products || [];
+        renderAdminList();
+      } catch (e) {
+        // If Apps Script isn't configured yet, show empty state with note
+        console.warn('Could not load from Apps Script:', e);
+        allProducts = [];
+        renderAdminList();
+        showToast('⚠️ Could not connect to database. Check setup instructions.', 'err');
+      }
+    }
+
+    /* ── RENDER ADMIN PRODUCT LIST ─────────────────────────── */
+    function renderAdminList() {
+      const list = document.getElementById('admin-product-list');
+      const count = document.getElementById('product-count');
+      count.textContent = `(${allProducts.length} product${allProducts.length !== 1 ? 's' : ''})`;
+
+      if (!allProducts.length) {
+        list.innerHTML = `
+          <div class="admin-empty">
+            <span>📦</span>
+            No products yet. Add your first product using the form on the left!
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = allProducts.map(p => {
+        const imgHTML = p.imgURL
+          ? `<div class="admin-row-img"><img src="${p.imgURL}" alt="${p.name}" onerror="this.parentElement.innerHTML='${p.emoji || '📦'}'"/></div>`
+          : `<div class="admin-row-img">${p.emoji || '📦'}</div>`;
+
+        const stockBadge = p.inStock === 'false' || p.inStock === false
+          ? `<span class="admin-row-badge badge-out">Out of stock</span>`
+          : `<span class="admin-row-badge badge-in">In stock</span>`;
+
+        return `
+          <div class="admin-product-row ${(p.inStock === 'false' || p.inStock === false) ? 'out-of-stock' : ''}" id="row-${p.id}">
+            ${imgHTML}
+            <div class="admin-row-info">
+              <div class="admin-row-name">${p.name}</div>
+              <div class="admin-row-price">${p.price}</div>
+            </div>
+            ${stockBadge}
+            <div class="admin-row-actions">
+              <!-- Toggle stock -->
+              <button class="icon-btn" title="Toggle stock" onclick="toggleStock('${p.id}')">
+                ${(p.inStock === 'false' || p.inStock === false) ? '🔴' : '🟢'}
+              </button>
+              <!-- Edit -->
+              <button class="icon-btn" title="Edit product" onclick="startEdit('${p.id}')">✏️</button>
+              <!-- Delete -->
+              <button class="icon-btn danger" title="Delete product" onclick="openConfirmDelete('${p.id}', '${p.name.replace(/'/g,"\\'")}')">🗑️</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    /* ── IMAGE UPLOAD VIA IMGUR ────────────────────────────── */
+    async function handleImageSelect(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      // Show local preview immediately
+      const reader = new FileReader();
+      reader.onload = e => {
+        const preview = document.getElementById('img-preview');
+        preview.src   = e.target.result;
+        preview.style.display = 'block';
+        document.getElementById('img-placeholder').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to Imgur
+      const progressWrap = document.getElementById('upload-progress');
+      const progressBar  = document.getElementById('upload-progress-bar');
+      progressWrap.style.display = 'block';
+      progressBar.style.width = '30%';
+
+      try {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        progressBar.style.width = '60%';
+
+        const res  = await fetch('https://api.imgur.com/3/image', {
+          method:  'POST',
+          headers: { Authorization: `Client-ID ${ADMIN_CONFIG.imgurClientId}` },
+          body:    formData,
+        });
+
+        progressBar.style.width = '90%';
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('field-imgURL').value = data.data.link;
+          progressBar.style.width = '100%';
+          setTimeout(() => { progressWrap.style.display = 'none'; progressBar.style.width = '0%'; }, 600);
+          showToast('✅ Photo uploaded successfully!');
+        } else {
+          throw new Error(data.data.error || 'Upload failed');
+        }
+      } catch (err) {
+        progressWrap.style.display = 'none';
+        showToast('❌ Photo upload failed. Check your Imgur Client ID.', 'err');
+        console.error('Imgur upload error:', err);
+      }
+    }
+
+    /* ── SAVE PRODUCT (add or update) ─────────────────────── */
+    async function saveProduct() {
+      // Validate required fields
+      const name   = document.getElementById('field-name').value.trim();
+      const price  = document.getElementById('field-price').value.trim();
+      const desc   = document.getElementById('field-desc').value.trim();
+      const emoji  = document.getElementById('field-emoji').value.trim();
+      const imgURL = document.getElementById('field-imgURL').value.trim();
+      const inStock= document.getElementById('field-inStock').checked;
+
+      if (!name || !price || !desc || !emoji) {
+        showToast('⚠️ Please fill in all required fields.', 'err');
+        return;
+      }
+
+      const btn    = document.getElementById('save-btn');
+      const status = document.getElementById('save-status');
+      btn.disabled = true;
+      btn.textContent = editingId ? 'Updating…' : 'Saving…';
+
+      // Build product object
+      const product = {
+        id:      editingId || Date.now().toString(),
+        name, price, description: desc, emoji, imgURL,
+        inStock: inStock.toString(),
+      };
+
+      const action = editingId ? 'update' : 'add';
+
+      try {
+        const res  = await fetch(ADMIN_CONFIG.appsScriptURL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ action, product }),
+        });
+        const data = await res.json();
+
+        if (data.status === 'ok') {
+          showToast(editingId ? '✅ Product updated!' : '✅ Product added!');
+          cancelEdit();
+          await loadProducts();
+        } else {
+          throw new Error(data.message || 'Unknown error');
+        }
+      } catch (err) {
+        showToast('❌ Could not save. Check your Apps Script URL.', 'err');
+        console.error('Save error:', err);
+      }
+
+      btn.disabled = false;
+      btn.textContent = editingId ? 'Update Product' : 'Save Product';
+    }
+
+    /* ── START EDITING AN EXISTING PRODUCT ─────────────────── */
+    function startEdit(id) {
+      const p = allProducts.find(x => x.id == id);
+      if (!p) return;
+
+      editingId = p.id;
+      document.getElementById('form-heading').textContent   = '✏️ Edit Product';
+      document.getElementById('field-id').value            = p.id;
+      document.getElementById('field-name').value          = p.name;
+      document.getElementById('field-price').value         = p.price;
+      document.getElementById('field-desc').value          = p.description;
+      document.getElementById('field-emoji').value         = p.emoji;
+      document.getElementById('field-imgURL').value        = p.imgURL || '';
+      document.getElementById('field-inStock').checked     = (p.inStock !== 'false' && p.inStock !== false);
+      document.getElementById('save-btn').textContent      = 'Update Product';
+      document.getElementById('cancel-btn').style.display = 'block';
+
+      // Show existing image preview
+      const preview = document.getElementById('img-preview');
+      if (p.imgURL) {
+        preview.src   = p.imgURL;
+        preview.style.display = 'block';
+        document.getElementById('img-placeholder').style.display = 'none';
+      } else {
+        preview.style.display = 'none';
+        document.getElementById('img-placeholder').style.display = 'block';
+      }
+
+      // Scroll form into view on mobile
+      document.querySelector('.admin-form-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ── CANCEL EDIT (reset form to "add" mode) ────────────── */
+    function cancelEdit() {
+      editingId = null;
+      document.getElementById('form-heading').textContent   = '➕ Add New Product';
+      document.getElementById('field-name').value          = '';
+      document.getElementById('field-price').value         = '';
+      document.getElementById('field-desc').value          = '';
+      document.getElementById('field-emoji').value         = '';
+      document.getElementById('field-imgURL').value        = '';
+      document.getElementById('field-inStock').checked     = true;
+      document.getElementById('save-btn').textContent      = 'Save Product';
+      document.getElementById('cancel-btn').style.display = 'none';
+      document.getElementById('save-status').textContent   = '';
+
+      const preview = document.getElementById('img-preview');
+      preview.style.display = 'none';
+      preview.src = '';
+      document.getElementById('img-placeholder').style.display = 'block';
+      document.getElementById('img-file-input').value = '';
+    }
+
+    function startAdd() {
+      cancelEdit();
+      document.querySelector('.admin-form-panel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ── TOGGLE IN-STOCK STATUS ────────────────────────────── */
+    async function toggleStock(id) {
+      const p = allProducts.find(x => x.id == id);
+      if (!p) return;
+
+      const newStock = (p.inStock === 'false' || p.inStock === false) ? 'true' : 'false';
+      const updated  = { ...p, inStock: newStock };
+
+      try {
+        const res  = await fetch(ADMIN_CONFIG.appsScriptURL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ action: 'update', product: updated }),
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          showToast(newStock === 'true' ? '🟢 Marked as in stock' : '🔴 Marked as out of stock');
+          await loadProducts();
+        }
+      } catch (err) {
+        showToast('❌ Could not update stock status.', 'err');
+      }
+    }
+
+    /* ── DELETE CONFIRMATION ───────────────────────────────── */
+    function openConfirmDelete(id, name) {
+      pendingDelete = id;
+      document.getElementById('confirm-msg').textContent =
+        `Are you sure you want to delete "${name}"? This cannot be undone.`;
+      document.getElementById('confirm-overlay').classList.add('open');
+    }
+
+    function closeConfirm() {
+      pendingDelete = null;
+      document.getElementById('confirm-overlay').classList.remove('open');
+    }
+
+    async function confirmDelete() {
+      if (!pendingDelete) return;
+      closeConfirm();
+
+      try {
+        const res  = await fetch(ADMIN_CONFIG.appsScriptURL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ action: 'delete', id: pendingDelete }),
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          showToast('🗑️ Product deleted.');
+          await loadProducts();
+          // If we were editing this product, reset the form
+          if (editingId === pendingDelete) cancelEdit();
+        }
+      } catch (err) {
+        showToast('❌ Could not delete product.', 'err');
+      }
+      pendingDelete = null;
+    }
+
+    // Close confirm on overlay click
+    document.getElementById('confirm-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('confirm-overlay')) closeConfirm();
+    });
+  </script>
+
+  <!-- Load main navbar init only (not product render / manifesto etc.) -->
+  <script src="js/main.js"></script>
+</body>
+</html>

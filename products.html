@@ -1,0 +1,84 @@
+<!-- ============================================================
+     PRODUCTS PAGE (products.html)
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products — Dynance Stem Cell</title>
+  <link rel="stylesheet" href= "style.css"/>
+  <script src="https://kit.fontawesome.com/76e50300ea.js" crossorigin="anonymous"></script>
+</head>
+<body class="products-bg">
+
+  <nav class="navbar">
+    <span class="navbar__brand">ALFRED ZEKA</span>
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="manifesto.html">Manifesto</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <button class="navbar__hamburger"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-wrapper">
+    <section class="section">
+      <h2 class="section__title fade-in">Our Products</h2>
+      <p class="section__subtitle fade-in">Click <b>Order Now</b> on any product to place your order</p>
+      <div class="divider"></div>
+
+      <!-- Product cards are injected here by main.js renderProducts()    -->
+      <!-- Products are loaded live from Google Sheets via Apps Script.  -->
+      <!-- The owner manages products through admin.html                 -->
+      <div id="product-grid" class="product-grid"></div>
+    </section>
+  </div>
+
+  <!-- ── ORDER MODAL ──────────────────────────────────────── -->
+  <!--
+    This modal appears when the customer clicks "Order Now".
+    The JS fills in the product name and description automatically.
+  -->
+  <div id="order-modal" class="modal-overlay">
+    <div class="modal">
+      <button class="modal__close" onclick="closeOrderModal()">✕</button>
+      <div class="modal__title" id="modal-product-name"></div>
+      <div class="modal__desc"  id="modal-product-desc"></div>
+
+      <label class="modal__qty-label">How many packs would you like to order?</label>
+      <input
+        type="number"
+        id="modal-qty"
+        class="modal__qty-input"
+        value="1"
+        min="1"
+        max="999"
+      />
+
+      <div class="modal__actions">
+        <!-- WhatsApp order button -->
+        <button class="btn btn--whatsapp" onclick="orderViaWhatsApp()">
+          <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
+        </button>
+        <!-- Facebook Messenger order button -->
+        <button class="btn btn--facebook" onclick="orderViaFacebook()">
+          <i class="fa-brands fa-facebook-f"></i> Order via Facebook Messenger
+        </button>
+        <button class="btn btn--outline" onclick="closeOrderModal()">Cancel</button>
+      </div>
+
+      <p style="font-size:0.75rem;text-align:center;margin-top:0.8rem;opacity:0.55;">
+        Your order will be sent as a message. The owner will confirm availability and arrange delivery.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <span>Alfred Zeka</span> Dynance Global— Independent Distributor</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

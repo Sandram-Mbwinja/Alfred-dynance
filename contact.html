@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Contact — Dynance Stem Cell</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://kit.fontawesome.com/76e50300ea.js" crossorigin="anonymous"></script>
+</head>
+<body class="contact-bg">
+
+  <nav class="navbar">
+    <span class="navbar__brand">ALFRED ZEKA</span>
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="manifesto.html">Manifesto</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <button class="navbar__hamburger"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-wrapper">
+    <section class="section">
+      <h2 class="section__title fade-in">Get In Touch</h2>
+      <p class="section__subtitle fade-in">We'd love to hear from you — place an order, ask a question, or just say hello!</p>
+      <div class="divider"></div>
+
+      <div class="contact-grid">
+
+        <!-- ── CONTACT FORM ──────────────────────────────────── -->
+        <!--
+          This form submits to Formspree (free).
+          1. Sign up at formspree.io
+          2. Create a form and copy the endpoint URL
+          3. Paste it in CONFIG.formspreeURL in js/main.js
+          Customer emails are stored in Formspree dashboard for tracking.
+        -->
+        <div class="contact-form fade-in">
+          <div class="contact-form__title">Send Us a Message</div>
+
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="cf-name">Your Name *</label>
+              <input type="text" id="cf-name" name="name" placeholder="e.g. Alfred Zeka" required/>
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Email Address *</label>
+              <input type="email" id="cf-email" name="email" placeholder="you@example.com" required/>
+            </div>
+            <div class="form-group">
+              <label for="cf-phone">Phone / WhatsApp</label>
+              <input type="tel" id="cf-phone" name="phone" placeholder="+265 00 000 0000"/>
+            </div>
+            <div class="form-group">
+              <label for="cf-msg">Your Message *</label>
+              <textarea id="cf-msg" name="message" placeholder="I'd like to ask about…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--gold">Send Message</button>
+            <div id="form-status" class="form-status"></div>
+          </form>
+        </div>
+
+        <!-- ── CONTACT INFO ──────────────────────────────────── -->
+        <div class="contact-info fade-in" style="animation-delay:0.15s">
+
+          <!-- WhatsApp -->
+          <div class="info-card">
+            
+            <div class="info-card__icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <div class="info-card__title">WhatsApp</div>
+              <div class="info-card__detail">
+                <a data-cfg-href="whatsapp" href="#" target="_blank">Chat with us on WhatsApp</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Facebook -->
+          <div class="info-card">
+            <div class="info-card__icon"><i class="fa-brands fa-facebook-f"></i></div>
+            <div>
+              <div class="info-card__title">Facebook</div>
+              <div class="info-card__detail">
+                <a data-cfg-href="facebook" href="#" target="_blank">Find us on Facebook</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="info-card">
+            <div class="info-card__icon"><i class="fa-regular fa-envelope"></i></div>
+            <div>
+              <div class="info-card__title">Email</div>
+              <div class="info-card__detail">
+                <!-- Data-cfg attribute is replaced by JS with owner's email -->
+                <a data-cfg-href="email" href="#"><span data-cfg="email">your@email.com</span></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Physical address -->
+          <div class="info-card">
+            <div class="info-card__icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <div class="info-card__title">Physical Location</div>
+              <div class="info-card__detail" data-cfg="address">
+                UNIMA,Zomba,Malawi
+              </div>
+            </div>
+          </div>
+
+          <!-- Trading hours -->
+          <div class="info-card">
+            <div class="info-card__icon"><i class="fa-solid fa-business-time"></i></div>
+            <div>
+              <div class="info-card__title">Trading Hours</div>
+              <div class="info-card__detail">
+                Mon – Fri: 8:00 AM – 6:00 PM<br/>
+                Saturday: 9:00 AM – 4:00 PM<br/>
+                Sunday: 10:00 AM - 6:00 PM <br/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Map embed -->
+          <!--
+            To update the map:
+            1. Open maps.google.com
+            2. Search your address
+            3. Click Share → Embed a map → Copy HTML
+            4. Paste the src URL into CONFIG.mapEmbedSrc in js/main.js
+          -->
+          <div class="map-embed">
+            <iframe
+              id="map-frame"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3846.764587260631!2d35.33467057462738!3d-15.389230613108063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18d904e65366a83f%3A0xf1f319d6a0c14cf9!2sUniversity%20of%20Malawi!5e0!3m2!1sen!2smw!4v1775058940200!5m2!1sen!2smw"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Our Location"
+            ></iframe>
+          </div>
+
+        </div><!-- /contact-info -->
+      </div><!-- /contact-grid -->
+    </section>
+  </div>
+
+  <footer>
+   <p>© 2026 <span>Alfred Zeka</span> Dynance Global— Independent Distributor</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

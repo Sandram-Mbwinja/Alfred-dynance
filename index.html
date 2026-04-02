@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynance Stem Cell — Live Your Best Life</title>
+  <meta name="description" content="Premium stem cell wellness products by Dynance. Discover the power of cellular regeneration." />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/76e50300ea.js" crossorigin="anonymous"></script>
+
+  <!--
+    ── GOOGLE ANALYTICS ────────────────────────────────────────
+    Replace G-XXXXXXXXXX with your actual Measurement ID.
+    Get it free at: analytics.google.com
+  -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+</head>
+<body>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <span class="navbar__brand">ALFRED ZEKA</span>
+
+    <ul class="navbar__links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="manifesto.html">Manifesto</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+
+    <!-- Hamburger button for mobile -->
+    <button class="navbar__hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── HERO SECTION ────────────────────────────────────────── -->
+  <main>
+    <section class="hero">
+
+      <!-- Animated orbit scene -->
+      <div class="hero__scene">
+
+        <!-- Orbit decoration rings -->
+        <div class="orbit-ring orbit-ring-1"></div>
+        <div class="orbit-ring orbit-ring-2"></div>
+        <div class="orbit-ring orbit-ring-3"></div>
+
+        <!--
+          Owner's photo in the center.
+          REPLACE 'images/owner.jpg' with the actual photo file.
+          Photo should be square, at least 400×400px.
+        -->
+        <img
+          class="hero__owner"
+          src="images/Alfred.jpg"
+          alt="Dynance Distributor"
+          onerror="this.src='https://placehold.co/180x180/1E3A5F/C9A84C?text=Your+Photo'"
+        />
+
+        <!-- Orbiting product images — populated by JS (main.js) -->
+        <div class="orbit-item o1"><img src="images/product 1.jpg" alt="product" /></div>
+        <div class="orbit-item o2"><img src="images/product 2.jpg" alt="product" /></div>
+        <div class="orbit-item o3"><img src="images/product 3.jpg" alt="product" /></div>
+        <div class="orbit-item o4"><img src="images/product 4.jpg" alt="product" /></div>
+        <div class="orbit-item o5"><img src="images/product 5.jpg" alt="product" /></div>
+        <div class="orbit-item o6"><img src="images/product 6.png" alt="product" /></div>
+      </div>
+
+      <!-- Hero text and CTA -->
+      <div class="hero__text">
+        <h1>Stem Cell Wellness</h1>
+        <p>Harness the science of cellular regeneration. Premium Dynance products for a vibrant, youthful life.</p>
+        <a href="products.html" class="btn btn--gold">Explore Products</a>
+      </div>
+
+    </section>
+
+    <!-- ── INTRO STRIP BELOW HERO ──────────────────────────── -->
+    <section class="section text-center" style="padding-top:3rem; padding-bottom:3rem; background:rgba(0,0,0,0.3);">
+      <h2 class="section__title fade-in">Why Dynance?</h2>
+      <div class="divider"></div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; max-width:900px; margin:0 auto;">
+        <!-- Feature cards -->
+        <div class="perk-card fade-in">
+          <div class="perk-card__icon">🔬</div>
+          <div class="perk-card__title">Science-Backed</div>
+          <div class="perk-card__desc">Formulated on the latest stem cell research and cellular regeneration science.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.1s">
+          <div class="perk-card__icon">🌿</div>
+          <div class="perk-card__title">100% Natural</div>
+          <div class="perk-card__desc">Plant-derived stem cell extracts with no harmful chemicals or synthetic additives.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.2s">
+          <div class="perk-card__icon">⚡</div>
+          <div class="perk-card__title">Fast Results</div>
+          <div class="perk-card__desc">Thousands of satisfied customers report visible improvements within weeks.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.3s">
+          <div class="perk-card__icon">🛡️</div>
+          <div class="perk-card__title">Quality Assured</div>
+          <div class="perk-card__desc">Tested, certified, and trusted by distributors and customers across Africa.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;">
+        <a href="products.html" class="btn btn--outline">See All Products</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer>
+    <p>© 2026 <span>Alfred Zeka</span> Dynance Global— Independent Distributor</p>
+    <p style="margin-top:0.4rem;">
+      <a data-cfg-href="whatsapp" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> &nbsp;|&nbsp;
+      <a data-cfg-href="facebook" href="#" target="_blank"><i class="fa-brands fa-facebook-f"></i> Facebook</a> &nbsp;|&nbsp;
+      <a data-cfg-href="email"    href="#"><i class="fa-regular fa-envelope"></i> Email</a>
+    </p>
+  </footer>
+
+  <!-- Main script loaded last -->
+  <script src="app.js"></script>
+</body>
+</html>

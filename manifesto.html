@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Manifesto — Dynance Stem Cell</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://kit.fontawesome.com/76e50300ea.js" crossorigin="anonymous"></script>
+</head>
+<body class="manifesto-bg">
+
+  <nav class="navbar">
+    <span class="navbar__brand">ALFRED ZEKA</span>
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="manifesto.html" class="active">Manifesto</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <button class="navbar__hamburger"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-wrapper">
+    <section class="section">
+      <h2 class="section__title fade-in">Customer Manifestations</h2>
+      <p class="section__subtitle fade-in">
+        Real stories from real people — see how Dynance stem cell products are changing lives.
+      </p>
+      <div class="divider"></div>
+
+      <!--
+        Testimonials are fetched from Google Sheets and injected here.
+        Owner adds testimonials by filling a Google Form — no coding needed.
+        See CONFIG.sheetCSVURL in js/main.js to set up the link.
+      -->
+      <div id="testimonial-grid" class="testimonial-grid">
+        <!-- Skeleton cards shown here while loading -->
+      </div>
+
+      <div style="text-align:center; margin-top:2rem;" class="fade-in">
+        <p style="opacity:0.6; font-size:0.85rem; margin-bottom:1rem;">
+          Want to share your experience? Contact us!
+        </p>
+        <a data-cfg-href="whatsapp" href="#" class="btn btn--whatsapp" target="_blank">
+         <i class="fa-brands fa-whatsapp"></i> Share Your Story on WhatsApp
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+   <p>© 2026 <span>Alfred Zeka</span> Dynance Global— Independent Distributor</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

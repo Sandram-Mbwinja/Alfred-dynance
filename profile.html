@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Profile — Dynance Stem Cell</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://kit.fontawesome.com/76e50300ea.js" crossorigin="anonymous"></script>
+</head>
+<body class="profile-bg">
+
+  <nav class="navbar">
+    <span class="navbar__brand">ALFRED ZEKA</span>
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="manifesto.html">Manifesto</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html" class="active">Profile</a></li>
+    </ul>
+    <button class="navbar__hamburger"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <!-- ── OWNER BIO ─────────────────────────────────────────── -->
+    <div class="profile-hero fade-in">
+      <!--
+        Replace 'images/owner.jpg' with the owner's actual photo.
+        Same photo as the landing page can be reused.
+      -->
+      <img
+        class="profile-hero__photo"
+        src="images/Alfred.jpg"
+        alt="Owner"
+        onerror="this.src='https://placehold.co/160x160/1E3A5F/C9A84C?text=Your+Photo'"
+      />
+      <!-- Owner name pulled from CONFIG in JS -->
+      <h1 class="profile-hero__name" data-cfg="ownerName">Your Name</h1>
+      <p class="profile-hero__title">Dynance Independent Distributor | Entrepreneur</p>
+
+      <p class="profile-hero__bio">
+        <!--
+          REPLACE THIS TEXT with the owner's actual bio.
+          Keep it to 3-5 sentences. Tell your story!
+        -->
+        I am a passionate wellness entrepreneur who discovered Dynance stem cell products and
+        was immediately transformed by their results. My mission is to help people across Malawi
+        and beyond access the latest cellular regeneration science in an affordable, accessible way.
+        I believe vibrant health is everyone's birthright — and Dynance makes that possible.
+      </p>
+
+      <!-- Social links -->
+      <div class="social-links mt-3">
+        <a data-cfg-href="whatsapp" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a>
+        <a data-cfg-href="facebook" href="#" target="_blank"><i class="fa-brands fa-facebook-f"></i>Facebook</a>
+        <a data-cfg-href="email"    href="#"><i class="fa-regular fa-envelope"></i> Email</a>
+      </div>
+    </div>
+
+    <!-- ── BUSINESS OPPORTUNITY SECTION ──────────────────────── -->
+    <section class="section" style="padding-top:1rem;">
+
+      <div class="opportunity-section fade-in">
+        <h3>🚀 Start Your Dynance Journey</h3>
+        <p>
+          Are you looking for a flexible income opportunity that also changes lives? Join me as a
+          Dynance independent distributor. You will sell premium stem cell wellness products, earn
+          commissions on every sale, build your own network of distributors, and work on your own
+          schedule — all from your phone.
+        </p>
+        <p>
+          No experience required. I will personally mentor you, share my strategies, and support
+          you every step of the way. Thousands of distributors across Africa are earning real income
+          with Dynance. Your story can start today.
+        </p>
+        <a data-cfg-href="whatsapp" href="#" class="btn btn--whatsapp" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Message Me to Get Started
+        </a>
+      </div>
+
+      <!-- Perks / benefits of joining -->
+      <h2 class="section__title fade-in mt-3" style="margin-top:2rem;">What You Get</h2>
+      <div class="divider"></div>
+      <div class="perks-grid">
+        <div class="perk-card fade-in">
+          <div class="perk-card__icon">💰</div>
+          <div class="perk-card__title">Earn Commission</div>
+          <div class="perk-card__desc">Earn on every product you sell and every distributor you recruit.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.08s">
+          <div class="perk-card__icon">📱</div>
+          <div class="perk-card__title">Work From Your Phone</div>
+          <div class="perk-card__desc">Run your entire business via WhatsApp, Facebook, and this website.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.16s">
+          <div class="perk-card__icon">🎓</div>
+          <div class="perk-card__title">Personal Mentorship</div>
+          <div class="perk-card__desc">I personally guide you through your first sales and beyond.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.24s">
+          <div class="perk-card__icon">⏰</div>
+          <div class="perk-card__title">Flexible Hours</div>
+          <div class="perk-card__desc">Full-time, part-time, or side hustle — you set your own schedule.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.32s">
+          <div class="perk-card__icon">🌍</div>
+          <div class="perk-card__title">Growing Market</div>
+          <div class="perk-card__desc">Wellness products are in high demand across Africa and growing every year.</div>
+        </div>
+        <div class="perk-card fade-in" style="animation-delay:0.40s">
+          <div class="perk-card__icon">🛡️</div>
+          <div class="perk-card__title">Trusted Brand</div>
+          <div class="perk-card__desc">Sell Dynance — a science-backed brand thousands of customers already trust.</div>
+        </div>
+      </div>
+
+      <!-- ── DOWNLINE / TESTIMONIALS FROM DISTRIBUTORS ─────── -->
+      <!--
+        To add distributor testimonials, edit the cards below manually.
+        The owner or developer just copy-pastes a card and changes the text.
+      -->
+      <h2 class="section__title fade-in mt-3" style="margin-top:3rem;">What My Team Says</h2>
+      <div class="divider"></div>
+      <div class="testimonial-grid" style="margin-bottom:2rem;">
+
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-card__quote">"</div>
+          <div class="testimonial-card__text">
+            Joining as a distributor was the best financial decision I ever made. I made my first
+            sale within two days and have never looked back. The products sell themselves!
+          </div>
+          <div class="testimonial-card__footer">
+            <div class="testimonial-card__avatar-placeholder">C</div>
+            <div>
+              <div class="testimonial-card__name">Chifundo C.</div>
+              <div class="testimonial-card__date">Distributor since 2024</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in" style="animation-delay:0.1s">
+          <div class="testimonial-card__quote">"</div>
+          <div class="testimonial-card__text">
+            I was skeptical at first but the mentorship I received was outstanding. Within 3 months
+            I built a team of 8 distributors and I earn passive income every single week.
+          </div>
+          <div class="testimonial-card__footer">
+            <div class="testimonial-card__avatar-placeholder">Y</div>
+            <div>
+              <div class="testimonial-card__name">Yohane M.</div>
+              <div class="testimonial-card__date">Distributor since 2024</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in" style="animation-delay:0.2s">
+          <div class="testimonial-card__quote">"</div>
+          <div class="testimonial-card__text">
+            I joined as a full-time student and I started earning a great income with Dynance.I post
+            on WhatsApp status and orders come in. Simple, effective, and life-changing.
+          </div>
+          <div class="testimonial-card__footer">
+            <div class="testimonial-card__avatar-placeholder">N</div>
+            <div>
+              <div class="testimonial-card__name">Naphela K.</div>
+              <div class="testimonial-card__date">Distributor since 2024</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /testimonial-grid -->
+
+      <!-- Final CTA -->
+      <div class="text-center fade-in" style="padding: 2rem 0 3rem;">
+        <h3 style="font-family: var(--font-display); color: var(--gold); margin-bottom:0.8rem; font-size:1.3rem;">
+          Ready to Join the Dynance Family?
+        </h3>
+        <p style="opacity:0.75; margin-bottom:1.5rem; font-size:0.92rem;">
+          Send me a message right now and let's start your wellness business journey together.
+        </p>
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+          <a data-cfg-href="whatsapp" href="#" class="btn btn--whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Me</a>
+          <a data-cfg-href="facebook" href="#" class="btn btn--facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i> Facebook Message</a>
+        </div>
+      </div>
+
+    </section>
+  </div><!-- /page-wrapper -->
+
+  <footer>
+   <p>© 2026 <span>Alfred Zeka</span> Dynance Global— Independent Distributor</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
