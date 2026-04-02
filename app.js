@@ -51,7 +51,7 @@ const CONFIG = {
       name: "TRIPLE ROOT COFFEE (special for men)",
       description: "(NOT TO BE TAKEN TOGETHER WITH ROCENTA) Increases libido,improves the quality of erection,enhance sexual perfomance,erectile dysfunction (also for diabetics who have effects due to diabetes on their sexuality),against premature ejaculation,energy boosting,", 
       price: "MWK130,000",
-      img: "images/product 1.jpg",
+      img: "product 1.jpg",
       emoji: "💧"
     },
     {
@@ -59,7 +59,7 @@ const CONFIG = {
       name: "URBANISM",
       description: "For weight loss, Fat burning, strengthening appetite,helps in digestion, fast metabolism, strengthening body curves, reduces hunger, works as a detox agent, prevents from becoming fat again. If you want to have a slim, strong and balanced body in a short period, let urbanism be your favourite candy of all time.",
        price: "MWK150,000",
-      img: "images/product 2.jpg",
+      img: "product 2.jpg",
       emoji: "💊"
     },
     {
@@ -67,7 +67,7 @@ const CONFIG = {
       name: "ROCENTA",
       description: "For boosting the immune system, cardiovascular disorders,improve blood flow, skin infection, eye problems, liver problems, anti-stressing agent, haemorrhoid, hypertension, kidney disease, joint problems, anti aging, burns, diabetes, heart diseases, stroke, spinal cord injuries, all types of cancer etc. ",
       price:"MWK150,000",
-      img: "images/product 3.jpg",
+      img: "product 3.jpg",
       emoji: "🌿"
     },
     {
@@ -75,7 +75,7 @@ const CONFIG = {
       name: "ACE GUARD",
       description: "Balancing sugar levels, immunne booster,repairing cells, a strong antioxidant, reduces inflammation, anti-aging agent.",
       price: "MWK150,000",
-      img: "images/product 4.jpg",
+      img: "product 4.jpg",
       emoji: "👁️"
     },
     {
@@ -83,7 +83,7 @@ const CONFIG = {
       name: "COLLAGENE",
       description: "For improving skin elasticity, hydration, reducing joint pain, improved joint health, strong hair and nails, improves gut lining.",
       price: "MWK150,000",
-      img: "images/product 5.jpg",
+      img: "product 5.jpg",
       emoji: "✨"
     },
     {
@@ -91,7 +91,7 @@ const CONFIG = {
       name: "LYFTMAX (SPECIAL FOR LADIES)",
       description: "For reverse aging, boosting libido, reshaping and firming breasts, good for hormonal balance, reduces vaginal dryness, menopause issues. ",
       price: "MWK150,000",
-      img: "images/product 6.png",
+      img: "product 6.png",
       emoji: "💆"
     },
   ]
